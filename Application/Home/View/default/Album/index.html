@@ -1,0 +1,36 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h2>源自相同起点，演绎不同精彩！</h2>
+            <p class="lead"></p>
+        </div>
+    </header>
+</block>
+
+<block name="side">
+<!-- 左侧 nav
+================================================== -->
+    
+    <div class="span3 bs-docs-sidebar">
+    
+        <ul class="nav nav-list bs-docs-sidenav">
+            {:W('Category/lists', array('album', true))}
+        </ul>
+    </div>
+   
+</block>
+<block name="body">
+    <div class="span9">
+        <!-- Contents
+        ================================================== -->
+        <section id="contents">
+			<volist name="_list" id="item" >
+			<div>
+			<a href="{:U('album/detail',array('id'=>$item['id']))}">{$item.name}</a>
+			</div>
+			</volist>
+        </section>
+    </div>
+</block>

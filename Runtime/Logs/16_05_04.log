@@ -1,0 +1,21 @@
+[ 2016-05-04T10:22:55+08:00 ] ::1 /album/index.php?s=/admin/album/index.html
+ERR: 无法加载控制器:Album
+
+[ 2016-05-04T10:24:00+08:00 ] ::1 /album/index.php?s=/admin/album/index.html
+ERR: 无法加载控制器:Album
+
+[ 2016-05-04T10:25:32+08:00 ] ::1 /album/index.php?s=/admin/album/index.html
+ERR: 无法加载控制器:Album
+
+[ 2016-05-04T10:46:47+08:00 ] ::1 /album/index.php?s=/admin/album/index.html
+ERR: 模板不存在:./Application/Admin/View/Album/index.html
+
+[ 2016-05-04T10:47:17+08:00 ] ::1 /album/index.php?s=/admin/album/add.html
+ERR: 模板不存在:./Application/Admin/View/Album/add.html
+
+[ 2016-05-04T10:59:27+08:00 ] ::1 /album/index.php?s=/admin/album/add.html
+ERR: Think\Controller:getMenu方法不存在！
+
+[ 2016-05-04T10:59:31+08:00 ] ::1 /album/index.php?s=/admin/album/add.html
+ERR: Think\Controller:getMenu方法不存在！
+
