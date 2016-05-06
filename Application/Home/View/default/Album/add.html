@@ -1,0 +1,54 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h2>源自相同起点，演绎不同精彩！</h2>
+            <p class="lead"></p>
+        </div>
+    </header>
+</block>
+
+
+<block name="side">
+<div class="container">
+   	<ul class="breadcrumb">
+	  <li><a href="{:U('Index/index')}">首页</a> <span class="divider">/</span></li>
+	  <li><a href="{:U('Album/index')}">相册</a></li>
+	</ul>
+</div>
+</block>
+
+<block name="body">
+
+<div class="span12">
+
+<h4>相册添加</h4>
+		<form class="login-form" action="__SELF__" method="post">
+		          <div class="control-group">
+		            <label class="control-label" for="name">相册名</label>
+		            <div class="controls">
+		              <input type="text" id='name'  name="name" class="span3" placeholder="请输入相册名（10字以内）"  ajaxurl="/member/checkUserNameUnique.html" errormsg="请填写1-16位用户名" nullmsg="请填写用户名" datatype="*1-16" value="" name="username">
+		            </div>
+		          </div>
+		         <div class="control-group">
+		            <label class="control-label" >相册描述</label>
+		            <div class="controls">
+		            <textarea name='info' class="span3" rows='7' placeholder="请输入描述(100字以内)"></textarea>
+		            </div>
+		          </div>
+		          <div class="control-group">
+		            <label class="control-label" >分类</label>
+		            <div class="controls">
+		            	<tagLib name="html" />
+		                <html:select options="leixing" id="" name="type"  class='span3'  />
+		            </div>
+		        </div>
+		          <div class="control-group">
+		            <div class="controls">
+		              <button type="submit" class="btn">添加</button>
+		            </div>
+		          </div>
+        </form>
+</div>
+</block>
