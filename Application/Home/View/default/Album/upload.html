@@ -1,0 +1,82 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h2>源自相同起点，演绎不同精彩！</h2>
+            <p class="lead"></p>
+        </div>
+    </header>
+</block>
+
+
+<block name="side">
+<div class="container">
+   	<ul class="breadcrumb">
+	  <li><a href="{:U('Index/index')}">首页</a> <span class="divider">/</span></li>
+	  <li><a href="{:U('Album/index')}">相册</a><span class="divider">/</span></li>
+	  <li class="active" >上传照片</li>
+	</ul>
+</div>
+</block>
+
+<block name="style">
+<link rel="stylesheet" href="__STATIC__/uploadify/uploadify.css">  
+<style>
+.bar {
+    height: 18px;
+    background: green;
+}
+</style>
+</block>
+
+<block name="body">
+<div class="span12">
+
+<h4>上传照片</h4>
+		<form class="login-form" action="__SELF__" method="post">
+				<div class="control-group">
+		            <label class="control-label" >相册</label>
+		            <div class="controls">
+		                <tagLib name="html" />
+		                <html:select options="ab" id="" name="album"  class='span3'  />
+		            </div>
+		          </div>
+				<span>
+				<input type="file" name="file_upload" id="file_upload" />
+				</span>
+               
+                <button type="submit" class="btn btn-primary start">
+                    <i class="glyphicon  icon-upload icon-white"></i>
+                    <span>开始上传</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon  icon-remove-sign icon-white"></i>
+                    <span>取消上传</span>
+                </button>
+                <button type="button" class="btn btn-danger delete">
+                    <i class="glyphicon  icon-trash icon-white"></i>
+                    <span>删除</span>
+                </button>
+				        <div id="progress">
+						    <div class="bar" style="width: 0%;"></div>
+						</div>
+		            </div>
+		          </div>
+				<p>注意：文件大小不超过900kb</p>
+        </form>
+</div>
+</block>
+
+<block name="script">
+<script src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<script>
+$(function () {
+	    $("#file_upload").uploadify({
+	    	buttonText    :'选择文件',
+	        swf           : "__STATIC__/uploadify/uploadify.swf",
+	        uploader      : '/uploadify/uploadify.php',
+	    });
+});
+</script>
+</block>

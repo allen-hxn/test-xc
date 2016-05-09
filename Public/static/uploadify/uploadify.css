@@ -4,10 +4,10 @@ Copyright (c) 2012 Reactive Apps, Ronnie Garcia
 Released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
 */
 
-.uploadify {
+ .uploadify {
 	position: relative;
 	margin-bottom: 1em;
-}
+} 
 .uploadify-button {
 	background-color: #505050;
 	background-image: linear-gradient(bottom, #505050 0%, #707070 100%);
@@ -26,7 +26,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	background-repeat: no-repeat;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
-	border-radius: 30px;
+	border-radius: 10px;
 	border: 2px solid #808080;
 	color: #FFF;
 	font: bold 12px Arial, Helvetica, sans-serif;
@@ -53,7 +53,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 .uploadify-button.disabled {
 	background-color: #D0D0D0;
 	color: #808080;
-}
+} 
 .uploadify-queue {
 	margin-bottom: 1em;
 }
@@ -71,7 +71,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	background-color: #FDE5DD !important;
 }
 .uploadify-queue-item .cancel a {
-	background: url('../img/uploadify-cancel.png') 0 0 no-repeat;
+	background: url('./img/uploadify-cancel.png') 0 0 no-repeat;
 	float: right;
 	height:	16px;
 	text-indent: -9999px;

@@ -13,9 +13,9 @@ class AlbumController extends UCommonController {
 
    public function index(){
    	
-
    	$album = D('Album');
    	$where = array();
+   	$where['user_id'] = session('user_auth.uid');
    	if(I('get.type')){
    		 $where['type'] = I('get.type');
    		 $this->assign('type',I('get.type'));
@@ -58,6 +58,20 @@ class AlbumController extends UCommonController {
 			$this->assign('leixing',$leixing);			
 			$this->display();
 		}
+   }
+   
+   /*
+    * 图片上传
+    */
+   public function upload(){
+   	
+   	$ab = D('Album');
+   	$where['user_id'] = session('user_auth.uid');
+   	$list = $ab->where($where)->select();
+   	$data = getArrayKeyVal($list,'id',"name");//获取一维数组
+   	
+   	$this->assign('ab',$data);
+   	$this->display();
    }
    
    /* 文档分类检测 */

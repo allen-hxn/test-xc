@@ -950,3 +950,26 @@ function get_stemma($pids,Model &$model, $field='id'){
     }
     return $collection;
 }
+
+//从二维数组获取一维数组，键名和键值
+function getArrayKeyVal($arr,$key,$val=null){
+	if(is_array($arr)){
+		$data = array();
+		
+		if(empty($key)){
+			return null;
+		}elseif(empty($val)){
+			foreach ($arr as $k=>$v){
+				$data[$k] = $v[$key];
+			}
+		}else{
+			foreach ($arr as $k=>$v){
+				$data[$v[$key]] = $v[$val];
+			}
+		}
+				
+		return $data;
+	}else{
+		return null;
+	}
+}
