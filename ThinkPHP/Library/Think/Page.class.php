@@ -199,6 +199,8 @@ class Page{
     		}else{
     			if($page > 0 && $this->totalPages != 1){
     				$link_page .= '<li class="active"><a href="#">' . $page . '</a></li>';
+    			}elseif($page > 0 && $this->totalPages = 1){
+    				$link_page .= '<li class="active"><a href="#">1</a></li>';
     			}
     		}
     	}

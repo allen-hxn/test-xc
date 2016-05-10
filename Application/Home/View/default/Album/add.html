@@ -14,7 +14,8 @@
 <div class="container">
    	<ul class="breadcrumb">
 	  <li><a href="{:U('Index/index')}">首页</a> <span class="divider">/</span></li>
-	  <li><a href="{:U('Album/index')}">相册</a></li>
+	  <li><a href="{:U('Album/index')}">相册</a><span class="divider">/</span></li>
+	  <li class='active'>相册添加</li>
 	</ul>
 </div>
 </block>
@@ -28,13 +29,13 @@
 		          <div class="control-group">
 		            <label class="control-label" for="name">相册名</label>
 		            <div class="controls">
-		              <input type="text" id='name'  name="name" class="span3" placeholder="请输入相册名（10字以内）"  ajaxurl="/member/checkUserNameUnique.html" errormsg="请填写1-16位用户名" nullmsg="请填写用户名" datatype="*1-16" value="" name="username">
+		              <input type="text" id='name'  name="name"  class="span3" placeholder="请输入相册名（10字以内）"  ajaxurl="/member/checkUserNameUnique.html" errormsg="请填写1-16位用户名" nullmsg="请填写用户名" datatype="*1-16" value="" name="username">
 		            </div>
 		          </div>
 		         <div class="control-group">
 		            <label class="control-label" >相册描述</label>
 		            <div class="controls">
-		            <textarea name='info' class="span3" rows='7' placeholder="请输入描述(100字以内)"></textarea>
+		            <textarea name='info' class="span3" rows='7'  placeholder="请输入描述(100字以内)"></textarea>
 		            </div>
 		          </div>
 		          <div class="control-group">
@@ -46,7 +47,7 @@
 		        </div>
 		          <div class="control-group">
 		            <div class="controls">
-		              <button type="submit" class="btn">添加</button>
+		              <button type="submit" class="btn">提交</button>
 		            </div>
 		          </div>
         </form>

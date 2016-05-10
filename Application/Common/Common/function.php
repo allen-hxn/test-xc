@@ -973,3 +973,11 @@ function getArrayKeyVal($arr,$key,$val=null){
 		return null;
 	}
 }
+
+function ubbReplace($str) {
+	$str = str_replace ( ">", '<；', $str );
+	$str = str_replace ( ">", '>；', $str );
+	$str = str_replace ( "\n", '>；br/>；', $str );
+	$str = preg_replace ( "[\[em_([0-9]*)\]]", "<img src=\"/Public/static/jQuery-qqFace/arclist/$1.gif\" />", $str );
+	return $str;
+}

@@ -35,47 +35,77 @@
 
 <h4>上传照片</h4>
 		<form class="login-form" action="__SELF__" method="post">
+		
 				<div class="control-group">
 		            <label class="control-label" >相册</label>
 		            <div class="controls">
+		            <empty name="al">
 		                <tagLib name="html" />
-		                <html:select options="ab" id="" name="album"  class='span3'  />
+		                <html:select options="ab" id="album" name="album"  class='span3'  />
+		            <else/>
+		                <select name="album" id="album"  >
+		                <option value="{$al.id}">{$al.name}</option>
+		                </select>		                
+		            </empty>
+		                
 		            </div>
 		          </div>
+		          
 				<span>
 				<input type="file" name="file_upload" id="file_upload" />
 				</span>
                
-                <button type="submit" class="btn btn-primary start">
-                    <i class="glyphicon  icon-upload icon-white"></i>
-                    <span>开始上传</span>
-                </button>
-                <button type="reset" class="btn btn-warning cancel">
-                    <i class="glyphicon  icon-remove-sign icon-white"></i>
-                    <span>取消上传</span>
-                </button>
-                <button type="button" class="btn btn-danger delete">
-                    <i class="glyphicon  icon-trash icon-white"></i>
-                    <span>删除</span>
-                </button>
+                <a href="javascript:$('#file_upload').uploadify('upload', '*')" class="btn btn-primary"><i class="icon-upload icon-white"></i>开始上传</a>
+                <a href="javascript:$('#file_upload').uploadify('stop')" class="btn btn-warning"><i class="icon-upload icon-white"></i>停止上传</a>
+                
+               <!--  <a href="javascript:$('#file_upload').uploadify('cancel')" class="btn btn-danger"><i class="icon-remove icon-white"></i>取消首文件</a> -->
+                <a href="javascript:$('#file_upload').uploadify('cancel','*')" class="btn btn-danger"><i class="icon-remove icon-white"></i>清除所有</a>
+                
 				        <div id="progress">
 						    <div class="bar" style="width: 0%;"></div>
 						</div>
 		            </div>
 		          </div>
-				<p>注意：文件大小不超过900kb</p>
+				<p>注意：单张图片文件大小不超过1M</p>
         </form>
 </div>
 </block>
 
+
+
 <block name="script">
 <script src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<script src="__STATIC__/layer-pc/layer.js"></script>
+
 <script>
 $(function () {
+	    
 	    $("#file_upload").uploadify({
+	    	auto:false,
+	    	fileObjName:'albumimage',
+	    	fileSizeLimit:'1MB',
+	    	removeCompleted : false,
 	    	buttonText    :'选择文件',
 	        swf           : "__STATIC__/uploadify/uploadify.swf",
-	        uploader      : '/uploadify/uploadify.php',
+	        uploader      : '{:U("album/upload")}',
+	        onQueueComplete: function(queueData) {
+	            layer.alert(queueData.uploadsSuccessful + ' files were successfully uploaded.');
+	        },
+	        'onUploadStart': function (file) {  
+                $("#file_upload").uploadify("settings", "formData", { 'id':  $('#album').val()});  
+                //在onUploadStart事件中，也就是上传之前，把参数写好传递到后台。  
+            },
+	        'onUploadSuccess' : function(file, data, response) {
+	        	console.log(data);
+	        	var d = eval("("+data+")");
+	        	if(d.status == 1){
+	        		layer.alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + d.msg);
+	        	}else{
+	        		layer.alert(d.msg);
+	        	}
+	            
+	        }
+	        
 	    });
 });
 </script>
