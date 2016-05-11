@@ -49,14 +49,56 @@ class AlbumController extends UCommonController {
    	$show = $page->my_show();
    	$pic = M('album_pic')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
    	
-   	$where2['aid'] = I('id');
-   	$comments = M('album_comments')->where($where2)->select();
-   	$this->assign('comments',$comments);
+   	$pic_count = M('album_pic')->where(array('aid'=>I('id')))->count();
    	
+   	$where2['aid'] = I('id');
+   	$comments = M('album_comments')->where($where2)->order('addtime desc')->limit('5')->select();
+   	$commetns_count = M('album_comments')->where($where2)->count();
+   	$canyu = M('album_comments')->where($where2)->distinct(true)->field('add_uid')->select();
+    $canyu = count($canyu);
+    
+   	foreach ($comments as $key=>$val){
+   		$comments[$key]['zan'] = M('album_comments_zan')->where(array('com_id'=>$val['id']))->count();//点赞数
+   		
+   		$is = M('album_comments_zan')->where(array('com_id'=>$val['id'],'uid'=>session('user_auth.uid')))->find();
+   		empty($is)?$comments[$key]['isZan']=0:$comments[$key]['isZan']=1;
+   		
+   		$userinfo = M('ucenter_member')->where(array('id'=>$val['add_uid']))->find();
+   		$comments[$key]['username'] = $userinfo['username'];
+   		
+   		if($val['parent_id']){
+   			$comments[$key]['sub'] = M('album_comments a')->field('a.*,b.username')->join('left join ab_ucenter_member b on a.add_uid =b.id')->where(array('a.id'=>$val['parent_id']))->find();
+   		}
+   	}
+   	$this->assign('comments',$comments);
+   	 $this->assign('pic_count',$pic_count);
+   	$this->assign('comments_count',$commetns_count);
+   	$this->assign('canyu',$canyu);
    	$this->assign('pagebar',$show);
    	$this->assign('album',$album);
    	$this->assign('pic',$pic);
    	$this->display();
+   }
+   
+   public function loadMoreComment(){
+   	$where2['aid'] = I('id');
+   	$commetns_count = M('album_comments')->where($where2)->count();
+   	$page =new Page($commetns_count, 5);
+   	$show = $page->show();
+   	$comments = M('album_comments')->where($where2)->order('addtime desc')->limit($page->firstRow.','.$page->listRows)->select();
+   	foreach ($comments as $key=>$val){
+   		$comments[$key]['zan'] = M('album_comments_zan')->where(array('com_id'=>$val['id']))->count();//点赞数
+   		 
+   		$is = M('album_comments_zan')->where(array('com_id'=>$val['id'],'uid'=>session('user_auth.uid')))->find();
+   		empty($is)?$comments[$key]['isZan']=0:$comments[$key]['isZan']=1;
+   		 
+   		$userinfo = M('ucenter_member')->where(array('id'=>$val['add_uid']))->find();
+   		$comments[$key]['username'] = $userinfo['username'];
+   	}
+   	
+   	$this->assign('comments',$comments);
+   	$content = $this->fetch('Album:comments');
+   	echo $content;
    }
    
    public function add(){
@@ -76,8 +118,6 @@ class AlbumController extends UCommonController {
 			}
 		}else{
 			
-			
-
 			$leixing = C('ALBUM_THEME');
 			$this->assign('leixing',$leixing);			
 			$this->display();
@@ -170,6 +210,62 @@ class AlbumController extends UCommonController {
 	   	}
    }
    
+   public function picDetail(){
+   	
+   	$d['id'] =I('aid');
+   	$album = M('album')->where($d)->find();
+   
+   	
+   	$data['pid'] = I('pid');
+   	$pic = M('album_pic')->where($data)->find();
+   	  	
+   	$where2['pid'] = I('pid');
+   	$comments = M('album_pic_comments')->where($where2)->order('addtime desc')->limit('5')->select();
+   	$comments_count = M('album_pic_comments')->where($where2)->count();
+   	$canyu = M('album_pic_comments')->where($where2)->distinct(true)->field('add_uid')->select();
+   	$canyu = count($canyu);
+ 
+   	foreach ($comments as $key=>$val){
+ 		$comments[$key]['zan'] = M('album_pic_comments_zan')->where(array('com_id'=>$val['id']))->count();//点赞数
+   		 
+   		$is = M('album_pic_comments_zan')->where(array('com_id'=>$val['id'],'uid'=>session('user_auth.uid')))->find();
+   		empty($is)?$comments[$key]['isZan']=0:$comments[$key]['isZan']=1; 
+   		 
+   		$userinfo = M('ucenter_member')->where(array('id'=>$val['add_uid']))->find();
+   		$comments[$key]['username'] = $userinfo['username'];
+   		 
+    	if($val['parent_id']){
+    			$comments[$key]['sub'] = M('album_pic_comments a')->field('a.*,b.username')->join('left join ab_ucenter_member b on a.add_uid =b.id')->where(array('a.id'=>$val['parent_id']))->find();
+   		} 
+   	}
+   	
+   	$this->assign('album',$album);
+   	$this->assign('comments',$comments);
+   	$this->assign('comments_count',$comments_count);
+   	$this->assign('canyu',$canyu);
+   	$this->assign('pic',$pic);
+   	$this->display();
+   }
+   
+   public function addPicComment(){
+   	if(IS_POST){
+   		$data['pid'] = I('pid');
+   		$data['comment'] = I('con');
+   		$data['add_uid'] = session('user_auth.uid');
+   		$data['addtime'] = time();
+   		$res = M('album_pic_comments')->add($data);
+   		
+   		
+   		if($res){
+   			$this->success('发布成功');
+   		}else{
+   			$this->error('操作失败');
+   		}
+   	}else{
+   		$this->error('错误操作');
+   	}
+   }
+   
    /**
     * 设置封面
     */
@@ -207,6 +303,72 @@ class AlbumController extends UCommonController {
    	}else{
    		$this->error('错误操作');
    	}
+   }
+   
+   public function addHuifu(){
+   	if(IS_POST){
+   		$data['aid'] = I('albumid');
+   		$data['comment'] = I('con');
+   		$data['add_uid'] = session('user_auth.uid');
+   		$data['addtime'] = time();
+   		$data['parent_id'] =I('commentid');
+   		$res = M('album_comments')->add($data);
+       if($res){
+       	$this->success('发布成功');
+       }else{
+       $this->error('发布失败');
+       }
+   	}else{
+   		$this->error('错误操作');
+   	}
+   }
+   
+   public function deleteComment(){
+   	  if(IS_POST){
+   	  	$data['id'] = I('id');
+   	  	$res = M('album_comments')->where($data)->delete();
+   	  	if($res){
+   			$json['status'] = 1;
+   			$json['msg'] = 'succ';
+   		}else{
+   			$json['status'] = 0;
+   			$json['msg'] = '失败';
+   		}
+   		exit(json_encode($json));
+   	  }else{
+   	  	$this->error('错误操作');
+   	  }
+   }
+   
+   public function editZan(){
+	   	if(IS_POST){
+	   		if(I('type') == 'dian'){
+	   			$data['com_id'] = I('id');
+	   			$data['uid'] = session('user_auth.uid');
+	   			$res = M('album_comments_zan')->add($data);
+	   			if($res){
+	   			$json['status'] = 1;
+	   			$json['msg'] = 'succ';
+		   		}else{
+		   			$json['status'] = 0;
+		   			$json['msg'] = '失败';
+		   		}
+		   		
+		   			
+		   	}elseif(I('type') == 'quxiao'){
+		   		$where['com_id'] = I('id');
+		   		$where['uid'] = session('user_auth.uid');
+		   		$res = M('album_comments_zan')->where($where)->delete();
+		   		if($res){
+		   			$json['status'] = 1;
+		   			$json['msg'] = 'succ';
+		   		}else{
+		   			$json['status'] = 0;
+		   			$json['msg'] = '失败';
+		   		}   		
+		   	}
+		   	exit(json_encode($json));
+	   	}
    }
    
    /* 文档分类检测 */
