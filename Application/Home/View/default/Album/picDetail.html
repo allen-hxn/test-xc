@@ -76,7 +76,7 @@
 	                                         <a href="javascript:;">{$com.username}</a>:{$com.comment|ubbReplace=###}
 	                   </div>
 	                   <if condition="$com.sub != ''">
-	                    <div style="border:1px solid #dedede;border-radius:4px;padding:8px 20px; margin:0px 40px;">
+	                    <div style="border:1px solid #dedede;border-radius:4px;padding:8px 20px; margin:0px 20px 0 40px;">
 	                     <a href="javascript:;">{$com.sub.username}</a>:{$com.sub.comment|ubbReplace=###}
 	                   </div>
 	                   </if>
@@ -109,7 +109,11 @@
  
 			  
 		</div>
-			  <a class="btn load-more" style="width:100%;" data-page="2" ><i class="fa fa-angle-double-down"></i>加载更多评论</a>
+			 <div class="pagination pagination-centered">
+			  <ul>
+			    {$pagebar}
+			  </ul>
+			</div>
         </div>
     
     </div>
@@ -124,11 +128,112 @@
 <script src="__STATIC__/jQuery-qqFace/js/jquery-browser.js"></script>
 <script src="__STATIC__/jQuery-qqFace/js/jquery.qqFace.js"></script>
 <script src="__STATIC__/style.js"></script>
-<script src="__STATIC__/style.js"></script>
 <script>
 $(function(){
+
+	//回复 折叠
+	$('.show-huifu').click(function(){
+		var did = $(this).attr('data-target');
+		$(did).toggle();
+	});
+	
+	
+	//点击删除回复
+	$('.delete-hui').click(function(){
+		var this_ = $(this);
+		var cid = $(this).attr('data-id');
+		layer.confirm('您确定要删除吗',{},function(){
+			 
+			 $.post('{:U("album/deleteComment")}',{'id':cid},function(data){
+				 if(data.status == 1){
+					 this_.parents('.row-fluid').remove();
+					 layer.msg('删除成功', {icon: 1});
+				 }else{
+					 layer.alert(data.msg);
+				 }
+			 },'json');
+		});
+	});
+	$('body').on('click','delete-hui',function(){
+		var this_ = $(this);
+		var cid = $(this).attr('data-id');
+		layer.confirm('您确定要删除吗',{},function(){
+			 
+			 $.post('{:U("album/deleteComment")}',{'id':cid},function(data){
+				 if(data.status == 1){
+					 this_.parents('.row-fluid').remove();
+					 layer.msg('删除成功', {icon: 1});
+				 }else{
+					 layer.alert(data.msg);
+				 }
+			 },'json');
+		});
+	})
+	
+///////////////////////////////////////////////	
+	//点赞
+	$('.zan').click(function(){
+		if($(this).hasClass('dianzan')){
+				var this_ = $(this);
+				var cid = $(this).attr('data-id');
+				$.post('{:U("album/editZan")}',{'id':cid,'type':'dian','flag':'pic'},function(data){
+					if(data.status == 1){
+					    this_.removeClass('dianzan').addClass('quxiao');
+					    this_.css('color','red');
+					    layer.msg('成功', {icon: 1});
+					}else{
+						layer.alert(data.msg);
+					}
+				},'json');
+			
+		}else if($(this).hasClass('quxiao')){
+			var this_ = $(this);
+			var cid = $(this).attr('data-id');
+			$.post('{:U("album/editZan")}',{'id':cid,'type':'quxiao','flag':'pic'},function(data){
+				if(data.status == 1){
+				    this_.removeClass('quxiao').addClass('dianzan');
+				    this_.css('color','');
+				    layer.msg('成功', {icon: 1});
+				}else{
+					layer.alert(data.msg);
+				}
+			},'json');
+		}
+	});
+
+	$('body').on('click','.zan',function(){
+		if($(this).hasClass('dianzan')){
+			var this_ = $(this);
+			var cid = $(this).attr('data-id');
+			$.post('{:U("album/editZan")}',{'id':cid,'type':'dian'},function(data){
+				if(data.status == 1){
+				    this_.removeClass('dianzan').addClass('quxiao');
+				    this_.css('color','red');
+				    layer.msg('成功', {icon: 1});
+				}else{
+					layer.alert(data.msg);
+				}
+			},'json');
+		
+	}else if($(this).hasClass('quxiao')){
+		var this_ = $(this);
+		var cid = $(this).attr('data-id');
+		$.post('{:U("album/editZan")}',{'id':cid,'type':'quxiao'},function(data){
+			if(data.status == 1){
+			    this_.removeClass('quxiao').addClass('dianzan');
+			    this_.css('color','');
+			    layer.msg('成功', {icon: 1});
+			}else{
+				layer.alert(data.msg);
+			}
+		},'json');
+	}
+	});
+
+	
+////////////////////////////////////////////
+	
 	$('.emotion').qqFace({ 
-		id : 'facebox',
         assign:'comment-text', //给输入框赋值 
         path:'__STATIC__/jQuery-qqFace/arclist/'    //表情图片存放的路径 
     }); 

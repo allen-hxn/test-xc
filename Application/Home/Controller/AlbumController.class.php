@@ -45,15 +45,16 @@ class AlbumController extends UCommonController {
    	$where['aid'] = I('id');
    	$where['status'] = 0;
    	$count = M('album_pic')->where($where)->count();
-   	$page = new Page($count, 8);
-   	$show = $page->my_show();
-   	$pic = M('album_pic')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+   	$pic = M('album_pic')->where($where)->order('addtime desc')->select();
    	
    	$pic_count = M('album_pic')->where(array('aid'=>I('id')))->count();
    	
-   	$where2['aid'] = I('id');
-   	$comments = M('album_comments')->where($where2)->order('addtime desc')->limit('5')->select();
+   	$where2['aid'] = I('id'); 	
    	$commetns_count = M('album_comments')->where($where2)->count();
+   	$page = new Page($commetns_count, 5);
+   	$show = $page->my_show();
+   	$comments = M('album_comments')->where($where2)->order('addtime desc')->limit($page->firstRow.','.$page->listRows)->select();
+   	
    	$canyu = M('album_comments')->where($where2)->distinct(true)->field('add_uid')->select();
     $canyu = count($canyu);
     
@@ -71,7 +72,10 @@ class AlbumController extends UCommonController {
    		}
    	}
    	$this->assign('comments',$comments);
-   	 $this->assign('pic_count',$pic_count);
+
+   	$alist = M('album')->select();
+   	$this->assign('alist',$alist);
+   	$this->assign('pic_count',$pic_count);
    	$this->assign('comments_count',$commetns_count);
    	$this->assign('canyu',$canyu);
    	$this->assign('pagebar',$show);
@@ -220,8 +224,11 @@ class AlbumController extends UCommonController {
    	$pic = M('album_pic')->where($data)->find();
    	  	
    	$where2['pid'] = I('pid');
-   	$comments = M('album_pic_comments')->where($where2)->order('addtime desc')->limit('5')->select();
    	$comments_count = M('album_pic_comments')->where($where2)->count();
+   	$page = new Page($comments_count,5);
+   	$show = $page->my_show();
+   	$comments = M('album_pic_comments')->where($where2)->order('addtime desc')->limit($page->firstRow.','.$page->listRows)->select();
+   	
    	$canyu = M('album_pic_comments')->where($where2)->distinct(true)->field('add_uid')->select();
    	$canyu = count($canyu);
  
@@ -241,6 +248,7 @@ class AlbumController extends UCommonController {
    	
    	$this->assign('album',$album);
    	$this->assign('comments',$comments);
+   	$this->assign('pagebar',$show);
    	$this->assign('comments_count',$comments_count);
    	$this->assign('canyu',$canyu);
    	$this->assign('pic',$pic);
@@ -342,34 +350,118 @@ class AlbumController extends UCommonController {
    
    public function editZan(){
 	   	if(IS_POST){
-	   		if(I('type') == 'dian'){
-	   			$data['com_id'] = I('id');
-	   			$data['uid'] = session('user_auth.uid');
-	   			$res = M('album_comments_zan')->add($data);
-	   			if($res){
-	   			$json['status'] = 1;
-	   			$json['msg'] = 'succ';
-		   		}else{
-		   			$json['status'] = 0;
-		   			$json['msg'] = '失败';
-		   		}
-		   		
-		   			
-		   	}elseif(I('type') == 'quxiao'){
-		   		$where['com_id'] = I('id');
-		   		$where['uid'] = session('user_auth.uid');
-		   		$res = M('album_comments_zan')->where($where)->delete();
-		   		if($res){
-		   			$json['status'] = 1;
-		   			$json['msg'] = 'succ';
-		   		}else{
-		   			$json['status'] = 0;
-		   			$json['msg'] = '失败';
-		   		}   		
-		   	}
-		   	exit(json_encode($json));
+	   		
+	   		if(I('flag') == 'pic'){
+	   			if(I('type') == 'dian'){
+	   				$data['com_id'] = I('id');
+	   				$data['uid'] = session('user_auth.uid');
+	   				$res = M('album_pic_comments_zan')->add($data);
+	   				if($res){
+	   					$json['status'] = 1;
+	   					$json['msg'] = 'succ';
+	   				}else{
+	   					$json['status'] = 0;
+	   					$json['msg'] = '失败';
+	   				}
+	   					
+	   				 
+	   			}elseif(I('type') == 'quxiao'){
+	   				$where['com_id'] = I('id');
+	   				$where['uid'] = session('user_auth.uid');
+	   				$res = M('album_pic_comments_zan')->where($where)->delete();
+	   				if($res){
+	   					$json['status'] = 1;
+	   					$json['msg'] = 'succ';
+	   				}else{
+	   					$json['status'] = 0;
+	   					$json['msg'] = '失败';
+	   				}
+	   			}
+	   			exit(json_encode($json));
+	   		}else{
+	   			if(I('type') == 'dian'){
+	   				$data['com_id'] = I('id');
+	   				$data['uid'] = session('user_auth.uid');
+	   				$res = M('album_comments_zan')->add($data);
+	   				if($res){
+	   					$json['status'] = 1;
+	   					$json['msg'] = 'succ';
+	   				}else{
+	   					$json['status'] = 0;
+	   					$json['msg'] = '失败';
+	   				}
+	   				 
+	   			
+	   			}elseif(I('type') == 'quxiao'){
+	   				$where['com_id'] = I('id');
+	   				$where['uid'] = session('user_auth.uid');
+	   				$res = M('album_comments_zan')->where($where)->delete();
+	   				if($res){
+	   					$json['status'] = 1;
+	   					$json['msg'] = 'succ';
+	   				}else{
+	   					$json['status'] = 0;
+	   					$json['msg'] = '失败';
+	   				}
+	   			}
+	   			exit(json_encode($json));
+	   		}
+	   		
 	   	}
    }
+   
+   public function yidong(){
+   	if(IS_POST){
+
+   		$data['aid'] =  I('yidong-aid');
+   		$where['pid'] = I('yidong-pid');
+   		$res = M('album_pic')->where($where)->save($data);
+   		if($res){
+   			$this->success('移动成功');
+   		}else{
+   			$this->error('移动失败');
+   		}
+   	}else{
+   		$this->error('错误操作');
+   	}
+   }
+   
+   public function deletepic(){
+   	  $prefix = C('DB_PREFIX');
+   	  $data['pid'] = I('pid');
+   	  $pic = M('album_pic ap')->join(' left join '.$prefix.'album ab on ab.id = ap.aid')->where($data)->find();
+//    	  dump($pic);
+//    	  dump(M()->getLastSql());exit;
+   	  if($pic['user_id'] != session('user_auth.uid')){
+   	  	$this->error('您没有删除资格');
+   	  }
+   	  $res = M('album_pic')->where($data)->delete();
+   	  if($res){
+   	  	unlink('./Uploads'.$pic['path']);
+   	  	$this->success('删除成功');
+   	  }else{
+   	  	$this->error('删除失败');
+   	  }
+   }
+   
+  public function deletealbum(){
+  	$prefix = C('DB_PREFIX');
+  	$data['id'] = I('aid');
+    $album = M('album')->where($data)->find();
+  	if($album['user_id'] != session('user_auth.uid')){
+  		$this->error('您没有删除资格');
+  	}
+  	$pid = M('album_pic')->where(array('aid'=>I('aid')))->count();
+  	if($pid != 0){
+  		$this->error('该相册还有相片，请先清空');
+  	}
+  	$res = M('album')->where($data)->delete();
+  	if($res){
+  		$this->success('删除成功',U('album/index'));
+  	}else{
+  		$this->error('删除失败');
+  	}
+  }
    
    /* 文档分类检测 */
    private function category($id = 0){

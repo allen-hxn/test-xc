@@ -1,4 +1,24 @@
+ <button id="back-to-top" style="position:fixed;top:800px;right:50px;display:none;"><i class="fa fa-chevron-up fa-2x"></i></button>
+ <<script type="text/javascript">
+$(function(){
+    $(window).scroll(function(){  
+        if ($(window).scrollTop()>100){  
+            $("#back-to-top").fadeIn(500);  
+        }  
+        else  
+        {  
+            $("#back-to-top").fadeOut(500);  
+        }  
+    });  
 
+    //当点击跳转链接后，回到页面顶部位置  
+
+    $("#back-to-top").click(function(){  
+        $('body,html').animate({scrollTop:0},200);  
+        return false;  
+    }); 
+})
+</script>
     <!-- 底部
     ================================================== -->
     <footer class="footer">

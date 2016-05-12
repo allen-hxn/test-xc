@@ -26,7 +26,7 @@ return array(
 					'comment_uid_youyan'=>array(
 						'title'=>'账号id:',
 						'type'=>'text',
-						'value'=>'90040',
+						'value'=>'2099367',
 						'tip'=>'填写自己登录友言后的uid,填写后可进相应官方后台'
 					),
 				)
