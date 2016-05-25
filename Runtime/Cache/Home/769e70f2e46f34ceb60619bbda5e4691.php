@@ -3,22 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 <title><?php echo C('WEB_SITE_TITLE');?></title>
-<link href="/album/Public/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/album/Public/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="/album/Public/static/bootstrap/css/docs.css" rel="stylesheet">
-<link href="/album/Public/static/bootstrap/css/onethink.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/docs.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/onethink.css" rel="stylesheet">
+<link href="/Public/static/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
-<script src="/album/Public/static/bootstrap/js/html5shiv.js"></script>
+<script src="/Public/static/bootstrap/js/html5shiv.js"></script>
 <![endif]-->
 
 <!--[if lt IE 9]>
-<script type="text/javascript" src="/album/Public/static/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/Public/static/jquery-1.10.2.min.js"></script>
 <![endif]-->
 <!--[if gte IE 9]><!-->
-<script type="text/javascript" src="/album/Public/static/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="/album/Public/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Public/static/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="/Public/static/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Public/static/layer-pc/layer.js"></script>
 <!--<![endif]-->
 <!-- 页面header钩子，一般用于加载插件CSS文件和代码 -->
 <?php echo hook('pageHeader');?>
@@ -128,7 +130,27 @@
 	<!-- /主体 -->
 
 	<!-- 底部 -->
-	
+	 <button id="back-to-top" style="position:fixed;top:800px;right:50px;display:none;"><i class="fa fa-chevron-up fa-2x"></i></button>
+ <<script type="text/javascript">
+$(function(){
+    $(window).scroll(function(){  
+        if ($(window).scrollTop()>100){  
+            $("#back-to-top").fadeIn(500);  
+        }  
+        else  
+        {  
+            $("#back-to-top").fadeOut(500);  
+        }  
+    });  
+
+    //当点击跳转链接后，回到页面顶部位置  
+
+    $("#back-to-top").click(function(){  
+        $('body,html').animate({scrollTop:0},200);  
+        return false;  
+    }); 
+})
+</script>
     <!-- 底部
     ================================================== -->
     <footer class="footer">
@@ -140,9 +162,9 @@
 <script type="text/javascript">
 (function(){
 	var ThinkPHP = window.Think = {
-		"ROOT"   : "/album", //当前网站地址
-		"APP"    : "/album/index.php?s=", //当前项目地址
-		"PUBLIC" : "/album/Public", //项目公共目录地址
+		"ROOT"   : "", //当前网站地址
+		"APP"    : "", //当前项目地址
+		"PUBLIC" : "/Public", //项目公共目录地址
 		"DEEP"   : "<?php echo C('URL_PATHINFO_DEPR');?>", //PATHINFO分割符
 		"MODEL"  : ["<?php echo C('URL_MODEL');?>", "<?php echo C('URL_CASE_INSENSITIVE');?>", "<?php echo C('URL_HTML_SUFFIX');?>"],
 		"VAR"    : ["<?php echo C('VAR_MODULE');?>", "<?php echo C('VAR_CONTROLLER');?>", "<?php echo C('VAR_ACTION');?>"]

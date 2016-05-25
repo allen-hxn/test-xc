@@ -3,22 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 <title><?php echo C('WEB_SITE_TITLE');?></title>
-<link href="/album/Public/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/album/Public/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="/album/Public/static/bootstrap/css/docs.css" rel="stylesheet">
-<link href="/album/Public/static/bootstrap/css/onethink.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/docs.css" rel="stylesheet">
+<link href="/Public/static/bootstrap/css/onethink.css" rel="stylesheet">
+<link href="/Public/static/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
-<script src="/album/Public/static/bootstrap/js/html5shiv.js"></script>
+<script src="/Public/static/bootstrap/js/html5shiv.js"></script>
 <![endif]-->
 
 <!--[if lt IE 9]>
-<script type="text/javascript" src="/album/Public/static/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/Public/static/jquery-1.10.2.min.js"></script>
 <![endif]-->
 <!--[if gte IE 9]><!-->
-<script type="text/javascript" src="/album/Public/static/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="/album/Public/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Public/static/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="/Public/static/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Public/static/layer-pc/layer.js"></script>
 <!--<![endif]-->
 <!-- 页面header钩子，一般用于加载插件CSS文件和代码 -->
 <?php echo hook('pageHeader');?>
@@ -82,26 +84,81 @@
 <div id="main-container" class="container">
     <div class="row">
         
-<!-- 左侧 nav
-================================================== -->
-    
-    <div class="span3 bs-docs-sidebar">
-    
+   <div class="container">
+   	<ul class="breadcrumb">
+	  <li><a href="<?php echo U('Index/index');?>">首页</a> <span class="divider">/</span></li>
+	  <li><a href="<?php echo U('Album/index');?>">相册</a><span class="divider">/</span></li>
+	  <li class='active'>
+	  <?php if($type == 1): ?>最爱
+	   <?php elseif($type == 2): ?>
+	   风景
+	   <?php elseif($type == 3): ?>
+	   美食
+	   <?php elseif($type == 4): ?>
+	   怀恋
+	   <?php else: ?>
+	       全部<?php endif; ?>
+	  </li>
+	</ul>
+	<a class="btn btn-primary" style="margin-left:13px;" href="<?php echo U('album/add');?>">添加相册</a>
+	<a class="btn btn-primary" style="margin-left:13px;" href="<?php echo U('album/upload');?>">上传照片</a>
+   </div>
+   <div class="span3 bs-docs-sidebar">    
         <ul class="nav nav-list bs-docs-sidenav">
-            <?php echo W('Category/lists', array('album', true));?>
-        </ul>
+            <li>
+			    <a href="<?php echo U('Album/index');?>">
+				<i class="icon-chevron-right"></i>全部</a>
+		    </li>
+        <?php if(is_array($leixing)): foreach($leixing as $k=>$vo): ?><li>
+			    <a href="<?php echo U('album/index',array('type'=>$k));?>">
+				<i class="icon-chevron-right"></i><?php echo ($vo); ?></a>
+		    </li><?php endforeach; endif; ?>	       
+	   </ul>
     </div>
    
 
         
     <div class="span9">
-        <!-- Contents
-        ================================================== -->
-        <section id="contents">
-			<?php if(is_array($_list)): $i = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$item): $mod = ($i % 2 );++$i;?><div>
-			<a href="<?php echo U('album/detail',array('id'=>$item['id']));?>"><?php echo ($item["name"]); ?></a>
-			</div><?php endforeach; endif; else: echo "" ;endif; ?>
+        <section id="contents">	
+				
+			<div class="row-fluid">
+			 
+              <ul class="thumbnails">
+				<?php if(is_array($_list)): $k1 = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$item): $mod = ($k1 % 3 );++$k1;?><li class="span4">
+	                <div class="thumbnail">
+	                  <a href="<?php echo U('album/detail',array('id'=>$item['id']));?>">
+					  <img data-src="holder.js/300x200" alt="300x200" src="/Uploads<?php echo ((isset($item["fengmian"]) && ($item["fengmian"] !== ""))?($item["fengmian"]):'/none.png'); ?>" style="width:100%;height:200px;">	                 
+	                 </a>
+	                  <strong style="position:relative;top:-31px;right:-81%; font-size:20px;color:white;"><?php echo ((isset($item["count"]) && ($item["count"] !== ""))?($item["count"]):0); ?></strong>
+	                  <div class="caption" style="margin-top:-20px;">
+	                    
+	                    <div style="float:left;">
+	                    <h4><a href="<?php echo U('album/detail',array('id'=>$item['id']));?>"><?php echo ($item["name"]); ?></a></h4>
+		                    
+	                    </div>
+						<div style="float:right;     margin-top: 16px;text-align:right;">
+						  <i class="icon-thumbs-up" title="赞"></i>12
+		                    <i class="icon-comment" title="评论"></i>100
+						</div>
+	                     <div style="clear:both;"></div>              
+	                  </div>
+	                </div>
+	              </li>
+	              
+	              <?php if(($mod) == "2"): ?></ul>
+		             </div>
+		             <div class="row-fluid">
+		                <ul class="thumbnails"><?php endif; endforeach; endif; else: echo "" ;endif; ?>
+			   </ul>
+             </div>
+			
         </section>
+        
+         <div class="pagination pagination-centered">
+			  <ul>
+			    <?php echo ($_page); ?>
+			  </ul>
+		</div>
     </div>
 
     </div>
@@ -117,7 +174,27 @@
 	<!-- /主体 -->
 
 	<!-- 底部 -->
-	
+	 <button id="back-to-top" style="position:fixed;top:800px;right:50px;display:none;"><i class="fa fa-chevron-up fa-2x"></i></button>
+ <<script type="text/javascript">
+$(function(){
+    $(window).scroll(function(){  
+        if ($(window).scrollTop()>100){  
+            $("#back-to-top").fadeIn(500);  
+        }  
+        else  
+        {  
+            $("#back-to-top").fadeOut(500);  
+        }  
+    });  
+
+    //当点击跳转链接后，回到页面顶部位置  
+
+    $("#back-to-top").click(function(){  
+        $('body,html').animate({scrollTop:0},200);  
+        return false;  
+    }); 
+})
+</script>
     <!-- 底部
     ================================================== -->
     <footer class="footer">
@@ -129,9 +206,9 @@
 <script type="text/javascript">
 (function(){
 	var ThinkPHP = window.Think = {
-		"ROOT"   : "/album", //当前网站地址
-		"APP"    : "/album/index.php?s=", //当前项目地址
-		"PUBLIC" : "/album/Public", //项目公共目录地址
+		"ROOT"   : "", //当前网站地址
+		"APP"    : "", //当前项目地址
+		"PUBLIC" : "/Public", //项目公共目录地址
 		"DEEP"   : "<?php echo C('URL_PATHINFO_DEPR');?>", //PATHINFO分割符
 		"MODEL"  : ["<?php echo C('URL_MODEL');?>", "<?php echo C('URL_CASE_INSENSITIVE');?>", "<?php echo C('URL_HTML_SUFFIX');?>"],
 		"VAR"    : ["<?php echo C('VAR_MODULE');?>", "<?php echo C('VAR_CONTROLLER');?>", "<?php echo C('VAR_ACTION');?>"]

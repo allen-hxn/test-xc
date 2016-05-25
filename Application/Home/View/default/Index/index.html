@@ -1,48 +1,75 @@
 <extend name="Base/common"/>
 
+<block name="style">
+<style>
+
+.header-t{background: linear-gradient(45deg,#020031 0,#6d3353 100%); min-height:200px;color:#fff; text-align:center;padding:50px 0;}
+.header-t h1{font-size:100px;margin:0px;  line-height: 1;   letter-spacing: -2px;   font-weight: 700;}
+.header-t h3 {font-size:40px;}
+
+
+.list-li {list-style:none;margin:0px auto;text-align: center;margin-top:70px;-webkit-animation: myfirst 1s; position:relative;top:0px;}
+.list-li li{display: inline-block;margin:0 10px;border:1px dashed #dedede; min-height: 250px;   word-wrap: break-word; word-break: break-all;
+    width: 20%;}
+
+.list-li li p{font-size:15px;font-weight:20;padding: 10px;  min-height: 139px;}
+
+@-webkit-keyframes myfirst 
+{
+from {top:40px;opacity:0.2;}
+to {top:0px;}
+}
+
+.moving{min-height:100px;font-size:30px;text-align:center;position:relative;left:100px;opacity:0.2;}
+</style>
+</block>
+
+<block name="script">
+<script>
+$(function(){
+	$(window).scroll(function(){
+		if($(window).scrollTop() > 100){
+			$('.moving').animate({left:'0px',opacity:'1'},500);
+		}
+	});
+})
+</script>
+</block>
 <block name="header">
-    <header class="jumbotron subhead" id="overview">
-        <div class="container">
-            <h2>源自相同起点，演绎不同精彩！</h2>
-            <p class="lead"></p>
-        </div>
-    </header>
+
+         <header class="header-t" style=" ">
+    	    <h3>源自相同起点，演绎不同精彩！</h3>
+         </header>
+
 </block>
 
 <block name="side">
-<!-- 左侧 nav
-================================================== -->
-    <div class="span3 bs-docs-sidebar">
-        <ul class="nav nav-list bs-docs-sidenav">
-            {:W('Category/lists', array(1, true))}
-        </ul>
-    </div>
+
 </block>
 
 <block name="body">
-    <div class="span9">
-        <!-- Contents
-        ================================================== -->
-        <section id="contents">
-            <article:list name="article" category="1" child="true">
-                <div class="">
-                    <h3><a href="{:U('Article/detail?id='.$article['id'])}">{$article.title}</a></h3>
-                </div>
-                <div>
-                    <p class="lead">{$article.description}</p>
-                </div>
-                <div>
-                    <span><a href="{:U('Article/detail?id='.$article['id'])}">查看全文</a></span>
-                    <span class="pull-right">
-                        <span class="author">{$article.uid|get_username}</span>
-                        <span>于 {$article.create_time|date='Y-m-d H:i',###}</span> 发表在 <span>
-                        <a href="{:U('Article/lists?category='.get_category_name($article['category_id']))}">{$article.category_id|get_category_title}</a></span> ( 阅读：{$article.view} )
-                    </span>
-                </div>
-                <hr/>
-            </article:list>
 
-        </section>
-    </div>
-        </div>
+   <ul class='list-li'>
+     <li class='li-item'>
+       <p>学习</p>
+       <button class='btn btn-primary'>click</button>
+     </li>
+     <li class='li-item'>
+       <p>勇敢</p>
+       <button class='btn btn-primary'>click</button>
+     </li>
+     <li class='li-item'>
+       <p>活泼</p>
+       <button class='btn btn-primary'>click</button>
+     </li>
+   </ul>
+   
+   <div style="min-height:300px;">
+            
+   </div>
+   <div class='moving'>
+       <h3>来加入我们吧</h3>
+   <a class="btn btn-info" href="{:U('User/register')}">立即注册</a>
+   </div>
+   
 </block>

@@ -11,6 +11,7 @@ namespace Home\Controller;
 
 use Think\Upload;
 use Think\Page;
+use Org\Util\Date;
 class AlbumController extends UCommonController {
 
    public function index(){
@@ -49,12 +50,14 @@ class AlbumController extends UCommonController {
    	
    	$pic_count = M('album_pic')->where(array('aid'=>I('id')))->count();
    	
+
+    $order = 'addtime desc';
    	$where2['aid'] = I('id'); 	
    	$commetns_count = M('album_comments')->where($where2)->count();
    	$page = new Page($commetns_count, 5);
    	$show = $page->my_show();
-   	$comments = M('album_comments')->where($where2)->order('addtime desc')->limit($page->firstRow.','.$page->listRows)->select();
-   	
+   	$comments = M('album_comments')->where($where2)->order($order)->limit($page->firstRow.','.$page->listRows)->select();
+//    	dump(M()->getLastSql());
    	$canyu = M('album_comments')->where($where2)->distinct(true)->field('add_uid')->select();
     $canyu = count($canyu);
     
@@ -62,18 +65,25 @@ class AlbumController extends UCommonController {
    		$comments[$key]['zan'] = M('album_comments_zan')->where(array('com_id'=>$val['id']))->count();//点赞数
    		
    		$is = M('album_comments_zan')->where(array('com_id'=>$val['id'],'uid'=>session('user_auth.uid')))->find();
-   		empty($is)?$comments[$key]['isZan']=0:$comments[$key]['isZan']=1;
+   		empty($is)?$comments[$key]['isZan']=0:$comments[$key]['isZan']=1;//当前用户使用点赞
    		
    		$userinfo = M('ucenter_member')->where(array('id'=>$val['add_uid']))->find();
-   		$comments[$key]['username'] = $userinfo['username'];
+   		$comments[$key]['username'] = $userinfo['username'];//评论人
    		
-   		if($val['parent_id']){
+   		if($val['parent_id']){//父评论
    			$comments[$key]['sub'] = M('album_comments a')->field('a.*,b.username')->join('left join ab_ucenter_member b on a.add_uid =b.id')->where(array('a.id'=>$val['parent_id']))->find();
    		}
    	}
-   	$this->assign('comments',$comments);
+ 
+   	if(I('commenttype') == 'hot'){
+   		array_multisort(array_column($comments, 'zan'), SORT_DESC, $comments);//最热评论
+   	}
+   	$commenttype = I('commenttype')?I('commenttype'):null;
 
    	$alist = M('album')->select();
+   	
+   	$this->assign('commenttype',$commenttype);
+   	$this->assign('comments',$comments);
    	$this->assign('alist',$alist);
    	$this->assign('pic_count',$pic_count);
    	$this->assign('comments_count',$commetns_count);
@@ -262,8 +272,7 @@ class AlbumController extends UCommonController {
    		$data['add_uid'] = session('user_auth.uid');
    		$data['addtime'] = time();
    		$res = M('album_pic_comments')->add($data);
-   		
-   		
+   		  		
    		if($res){
    			$this->success('发布成功');
    		}else{
@@ -463,27 +472,50 @@ class AlbumController extends UCommonController {
   	}
   }
    
-   /* 文档分类检测 */
-   private function category($id = 0){
-   	/* 标识正确性检测 */
-   	$id = $id ? $id : I('get.category', 0);
-   	if(empty($id)){
-   		$this->error('没有指定文档分类！');
+   public function timeWall(){
+   	
+   	$pic = M('Album_pic ap')->join('left join ab_album as ab on ap.aid = ab.id')->field('ap.*,ab.name')->order('ap.addtime desc')->select();
+   	
+
+   	$list = array();
+   	foreach($pic as $key=>$val){
+   		$y = date('Y',$val['addtime']);
+   		$m = date('m',$val['addtime']);
+   		$list[$y][$m][] = $val;   		
    	}
+   	$this->assign('pic',$list);
+   	$this->display();
+   }
    
-   	/* 获取分类信息 */
-   	$category = D('Category')->info($id);
-   	if($category && 1 == $category['status']){
-   		switch ($category['display']) {
-   			case 0:
-   				$this->error('该分类禁止显示！');
-   				break;
-   				//TODO: 更多分类显示状态判断
-   			default:
-   				return $category;
-   		}
-   	} else {
-   		$this->error('分类不存在或被禁用！');
+   public function tramsformTime($val){
+   	  return date('Y',$val);
+   }
+   
+   /*
+    * 获取弹出层
+    */
+   public function pop(){
+   	$pics = M('Album_pic ap')->join('left join ab_album as ab on ap.aid = ab.id')->field('ap.*,ab.name')->order('ap.addtime desc')->select();
+  	
+   	$list = array();
+   	foreach($pics as $key=>$val){
+   		$y = date('Y',$val['addtime']);
+   		$m = date('m',$val['addtime']);
+   		$list[$y][$m][] = $val;
    	}
+   	$year = I('year');
+   	$month = I('month');
+   	$piclist = $list[$year][$month];//同一个月的图片列表
+   	$pic = M('Album_pic ap')->join('left join ab_album as ab on ap.aid = ab.id')->field('ap.*,ab.name')->where(array('ap.pid'=> I('pid')))->find();
+
+   	$res['pic'] = $pic;
+   	$res['piclist'] = $piclist;
+   	$this->assign('month',$month);
+   	$this->assign('year',$year);
+   	$this->assign('res',$res);
+// 	dump($res);
+   	layout(false);
+   	$res = $this->fetch();
+   	echo $res;exit;
    }
 }

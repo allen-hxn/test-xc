@@ -1,0 +1,74 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h2>源自相同起点，演绎不同精彩！</h2>
+            <p class="lead"></p>
+        </div>
+    </header>
+</block>
+
+<block name="side">
+<!-- 左侧 nav
+================================================== -->
+</block>
+<block name='style'>
+<link href="__STATIC__/lightbox/css/lightbox.css" rel="stylesheet">
+<style>
+.container-fluid {
+  padding: 20px;
+  }
+.box {
+  margin-bottom: 20px;
+  float: left;
+  width: 220px;
+  }
+  .box img {
+  max-width: 100%
+}
+
+
+</style>
+</block>
+<block name="body">
+    <div class="span12">
+        <!-- Contents
+        ================================================== -->
+        <section id="contents">
+           <div id="masonry" class="container-fluid">
+			  <div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
+				<div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
+				<div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
+				<div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
+			</div>
+
+        </section>
+    </div>
+
+</block>
+<block name='script'>
+<script src="__STATIC__/mm/js/masonry-docs.min.js"></script>
+<script src="__STATIC__/lightbox/js/lightbox.js"></script>
+
+<script>
+$(function(){
+	
+	 lightbox.option({
+	      'resizeDuration': 200,
+	      'wrapAround': true
+	    })
+	
+	    //瀑布流插件，暂时只能在窗口大小改变时适应作用
+  	 var $container = $('#masonry');
+	    $container.imagesLoaded(function() {
+	        $container.masonry({
+	                itemSelector: '.box',
+	                gutter: 20,
+	                isAnimated: true,
+	            });
+	     }); 
+
+})
+</script>
+</block>

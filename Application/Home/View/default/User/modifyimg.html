@@ -1,0 +1,65 @@
+<extend name="Base/common" />
+<block name="header">
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h2>用户个人中心</h2>
+    
+  </div>
+</header>
+</block>
+<block name="script">
+<script src="__STATIC__/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script>
+$(function(){
+	 $(".form_datetime").datepicker({'dateFormat':'yy-mm-dd',changeMonth: true, changeYear: true});
+})
+</script>
+</block>
+
+<block name="style">
+<link rel="stylesheet" href="__STATIC__/jquery-ui-1.11.4.custom/jquery-ui.css" type="text/css" media="screen" charset="utf-8" />
+<style>
+
+</style>
+</block>
+<block name="body">
+<section>
+	<div class="span3">
+        <ul class="nav nav-list bs-docs-sidenav">
+            <li>
+			    <a href="{:U('user/account')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-cog fa-fw"></i>个人设置</a>
+		    </li>
+		     <li>
+			    <a href="{:U('Album/index')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-eye fa-fw"></i>关注好友</a>
+		    </li>
+		     <li>
+			    <a href="{:U('Album/index')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-pencil fa-fw"></i>修改密码</a>
+		    </li>
+		</ul>
+	</div>
+	<div class="span9" style="margin-top:10px;">
+	  <h3>修改头像</h3>
+	  <form class="login-form" action="__SELF__" method="post">
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">用户名</label>
+            <div class="input-prepend">
+			  <span class="add-on"><i class="fa fa-user fa-fw"></i></span>
+			  <input class="" name="username" type="text" placeholder="请输入您的用户名">
+			</div>
+          </div>
+          
+          
+          <div class="control-group">
+            <div class="controls">
+             
+              <button type="submit" class="btn btn-primary">保存修改</button>
+            </div>
+          </div>
+        </form>
+         <a class="btn" href="{:U('user/account')}">个人资料</a>
+	</div>
+</section>
+</block>

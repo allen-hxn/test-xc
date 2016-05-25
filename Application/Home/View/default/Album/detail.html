@@ -21,8 +21,10 @@
 
 .comment-body a{cursor:pointer;}
 .dian-hui a{padding:0 5px;}
-.hide-xiangce li:hover{border:1px solid blue;}
-.xuan{border:1px solid blue;}
+.hide-xiangce li:hover{background:#0088CC;color:white;}
+.hide-xiangce li{padding:4px;margin:4px;width:180px;cursor:pointer;display:inline-block;}
+.xuan{background:#0088CC;color:white;}
+
 </style>
 </block>
 <block name="body">
@@ -44,15 +46,15 @@
 
 	    	   <h4>{$album.name}</h4>	    	    
 	    	   <p>{$album.info}</p>
-	    	   <a class="btn btn-primary" href="{:U('album/upload',array('aid'=>$album['id']))}">上传照片</a>
-		       <button class="btn btn-info">批量管理</button>
+	    	   <a class="btn btn-primary" href="{:U('album/upload',array('aid'=>$album['id']))}"><i class="icon-plus icon-white"></i>上传照片</a>
+		       <button class="btn btn-info"><i class="icon-list icon-white"></i>批量管理</button>
 		       <div class="btn-group hide-div" >
 					  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">更多			   
 					    <span class="caret"></span>
 					  </a>
 					  <ul class="dropdown-menu">			   
-	                  <li><a href="{:U('album/edit',array('id'=>$album['id']))}">编辑</a></li>
-	                  <li><a class="delete-album" data-aid="{$album.id}">删除</a></li>
+	                  <li><a href="{:U('album/edit',array('id'=>$album['id']))}"><i class="fa fa-edit"></i>编辑</a></li>
+	                  <li><a class="delete-album" data-aid="{$album.id}" href="javascript:;" ><i class="fa fa-trash-o"></i>删除</a></li>
 			   </div>  
 	    	  </div>         
              
@@ -77,10 +79,10 @@
               <li class="span3">
                 <div class="thumbnail">
                  <a href="/Uploads{$var.path}" rel="prettyPhoto[pp_gal]">
-                  <img data-src="holder.js/260x180" data-lightbox="image-box-set" data-title="My caption" alt="260x180" src="/Uploads{$var.path}"  style="width: 260px; height: 180px;">
+                  <img  src="/Uploads{$var.path}"  style="width: 260px; height: 180px;">
                  </a>
                 <div class="caption" style="font-size:10px;">
-	                <i class="icon-thumbs-up"></i>12
+	                
 	                <a class="example" href="javascript:;" data-toggle="popover" data-placement="bottom" data-content='<form style="margin:0px;" class="form-inline"><img  class="img-rounded" style="position:absolute;" src="/Uploads/album/20160509/57302d4d014c4.jpg" width="25" height="25" />&nbsp;<textarea type="text"  style="width:200px;margin:0 8px 0 30px;" class="input-small fast-comment" placeholder="写点什么吧" rows="1"></textarea> <div style="float:right;"> <button type="submit" class="btn">发表</button></div></form>' title="" data-original-title=""><i class="icon-comment"></i></a>100
 	                <div class="btn-group hide-div dropdown" >
 					  <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">			   
@@ -92,7 +94,7 @@
 	                  <li><a href="{:U('album/picDetail',array('pid'=>$var['pid'],'aid'=>$album['id']))}">编辑</a></li>	                 
 	                  <li class="divider"></li>
 	                  <li><a href="{:U('album/setFengmian',array('id'=>$var['pid'],'aid'=>$album['id']))}">设置为封面</a></li>
-	                  <li><a class="delete-pic" data-pid="{$var.pid}">删除</a></li>              
+	                  <li><a class="delete-pic" data-pid="{$var.pid}" href="javascript:;">删除</a></li>              
 					  </ul>
 				 </div>  	                         
 					<div style="float:right;">
@@ -108,14 +110,17 @@
      
             </ul>
             
-                     
-            
+           
           </div>
           
           <div class="comment" style="padding:20px 0px;">
 	          <div class='row-fluid'>
 		          <div class="span6" style="text-algin:left;"><h4>{$comments_count}条评论，{$canyu}人参与。</h4></div>
-		          <div class="span6" style="margin-top:10px;"><div style="float:right;"><i class="fa fa-star fa-lg"></i></div></div>
+		          <div class="span6" style="margin-top:10px;">
+		             <div style="float:right;">
+		             <i class="fa fa-star fa-lg"></i>
+		             </div>
+		           </div>
 
 	          </div>
 	          
@@ -133,12 +138,19 @@
 	          
 	          <div class="dropdown" style="margin:10px 0;border-bottom:1px solid #dedede;">
 			    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-			               最新评论
+				<if condition = "$commenttype == 'hot'">
+				最热评论
+				<else/>
+				最新评论
+				</if>
 			        <b class="caret"></b>
 			      </a>
 			    <ul class="dropdown-menu">
-			     <li><a href="#">最早评论</a></li>
-			     <li><a href="#">最热评论</a></li>
+                 <if condition = "$commenttype == 'hot'">
+					<li><a href="{:U('album/detail',array('id'=>$album['id']))}">最新评论</a></li>
+					<else/>
+					<li><a href="{:U('album/detail',array('commenttype'=>'hot','id'=>$album['id']))}">最热评论</a></li>
+				  </if>
 			    </ul>
 			  </div>
 			  
@@ -198,10 +210,9 @@
 		<input type="hidden"  name='yidong-aid' />
 	</form>
 
-	  <div>
 	     <ul style="list-style:none;">	       
 	        <volist name="alist" id="al" mod='3'>
-	        <li style='padding:4px;margin:4px;width:180px;float:left;cursor:pointer;' data-aid="{$al.id}">
+	        <li style='' data-aid="{$al.id}">
 	        <img data-src="holder.js/300x200" alt="300x200" src="/Uploads{$al.fengmian|default='/none.png'}" style="width:100px;height:100px;">	                 	                 
 	        <span>
 	        {$al.name}
@@ -209,8 +220,8 @@
 	       <eq name='mod' value='2' >
 	       </eq>
 	       </li>
-	        </volist>	       
-	     </ul>
+	        </volist>
+	     </ul>	       
 	    <div style="clear:both;"></div>
 
 	    <button class="btn submit-yidong">移动</button>
@@ -279,7 +290,7 @@ $(function(){
 		  content: $('.hide-xiangce'), //捕获的元素
 		  cancel: function(index){
 		    layer.close(index);
-		    this.content.show();
+		    
 		  }
 		});
 	});

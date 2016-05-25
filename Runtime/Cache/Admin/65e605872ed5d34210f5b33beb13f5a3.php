@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title><?php echo ($meta_title); ?>|OneThink管理平台</title>
-    <link href="/album/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
-    <link rel="stylesheet" type="text/css" href="/album/Public/Admin/css/base.css" media="all">
-    <link rel="stylesheet" type="text/css" href="/album/Public/Admin/css/common.css" media="all">
-    <link rel="stylesheet" type="text/css" href="/album/Public/Admin/css/module.css">
-    <link rel="stylesheet" type="text/css" href="/album/Public/Admin/css/style.css" media="all">
-	<link rel="stylesheet" type="text/css" href="/album/Public/Admin/css/<?php echo (C("COLOR_STYLE")); ?>.css" media="all">
+    <link href="/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/base.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/common.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/module.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Admin/css/style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="/Public/Admin/css/<?php echo (C("COLOR_STYLE")); ?>.css" media="all">
      <!--[if lt IE 9]>
-    <script type="text/javascript" src="/album/Public/static/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/Public/static/jquery-1.10.2.min.js"></script>
     <![endif]--><!--[if gte IE 9]><!-->
-    <script type="text/javascript" src="/album/Public/static/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/album/Public/Admin/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/Public/static/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/jquery.mousewheel.js"></script>
     <!--<![endif]-->
     
 </head>
@@ -158,17 +158,17 @@
     <script type="text/javascript">
     (function(){
         var ThinkPHP = window.Think = {
-            "ROOT"   : "/album", //当前网站地址
-            "APP"    : "/album/index.php?s=", //当前项目地址
-            "PUBLIC" : "/album/Public", //项目公共目录地址
+            "ROOT"   : "", //当前网站地址
+            "APP"    : "", //当前项目地址
+            "PUBLIC" : "/Public", //项目公共目录地址
             "DEEP"   : "<?php echo C('URL_PATHINFO_DEPR');?>", //PATHINFO分割符
             "MODEL"  : ["<?php echo C('URL_MODEL');?>", "<?php echo C('URL_CASE_INSENSITIVE');?>", "<?php echo C('URL_HTML_SUFFIX');?>"],
             "VAR"    : ["<?php echo C('VAR_MODULE');?>", "<?php echo C('VAR_CONTROLLER');?>", "<?php echo C('VAR_ACTION');?>"]
         }
     })();
     </script>
-    <script type="text/javascript" src="/album/Public/static/think.js"></script>
-    <script type="text/javascript" src="/album/Public/Admin/js/common.js"></script>
+    <script type="text/javascript" src="/Public/static/think.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/common.js"></script>
     <script type="text/javascript">
         +function(){
             var $window = $(window), $subnav = $("#subnav"), url;
@@ -239,7 +239,7 @@
         }();
     </script>
     
-	<script src="/album/Public/static/thinkbox/jquery.thinkbox.js"></script>
+	<script src="/Public/static/thinkbox/jquery.thinkbox.js"></script>
 
 	<script type="text/javascript">
 	//搜索功能

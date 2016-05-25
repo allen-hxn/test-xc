@@ -1,4 +1,10 @@
 <extend name="Base/common"/>
+<block name="style">
+<style>
+.ab-an{float: right;}
+
+</style>
+</block>
 
 <block name="header">
     <header class="jumbotron subhead" id="overview">
@@ -28,8 +34,14 @@
 	  </if>
 	  </li>
 	</ul>
-	<a class="btn btn-primary" style="margin-left:13px;" href="{:U('album/add')}">添加相册</a>
-	<a class="btn btn-primary" style="margin-left:13px;" href="{:U('album/upload')}">上传照片</a>
+	<a class="btn btn-primary" style="margin-left:13px;" href="{:U('album/add')}"><i class="icon-plus icon-white"></i>添加相册</a>
+	<a class="btn btn-primary" style="margin-left:13px;" href="{:U('album/upload')}"><i class="icon-upload icon-white"></i>上传照片</a>
+	
+	<div class="ab-an btn-group" >
+	  <a class="btn active" href="javascript:;"><i class="icon-list"></i>相册视图</a>
+	  <a class="btn" href="{:U('Album/timeWall')}"><i class="fa fa-photo"></i>时光墙</a>
+	</div>
+	
    </div>
    <div class="span3 bs-docs-sidebar">    
         <ul class="nav nav-list bs-docs-sidenav">
@@ -57,12 +69,12 @@
               <ul class="thumbnails">
 				<volist name="_list" id="item" mod="3" key='k1'>
 				   <li class="span4">
-	                <div class="thumbnail">
+	                <div class="thumbnail" style="border-bottom:1px solid #dedede;">
 	                  <a href="{:U('album/detail',array('id'=>$item['id']))}">
 					  <img data-src="holder.js/300x200" alt="300x200" src="/Uploads{$item.fengmian|default='/none.png'}" style="width:100%;height:200px;">	                 
 	                 </a>
 	                  <strong style="position:relative;top:-31px;right:-81%; font-size:20px;color:white;">{$item.count|default=0}</strong>
-	                  <div class="caption" style="margin-top:-20px;">
+	                  <div class="caption" style="margin-top:-20px;border-bottom:1px solid #dedede;">
 	                    
 	                    <div style="float:left;">
 	                    <h4><a href="{:U('album/detail',array('id'=>$item['id']))}">{$item.name}</a></h4>
@@ -72,7 +84,7 @@
 						  <i class="icon-thumbs-up" title="赞"></i>12
 		                    <i class="icon-comment" title="评论"></i>100
 						</div>
-	                     <div style="clear:both;"></div>              
+	                     <div style="clear:both;"></div>          
 	                  </div>
 	                </div>
 	              </li>

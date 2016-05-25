@@ -33,11 +33,13 @@
 <block name="body">
 <div class="span12">
 
-<h4>上传照片</h4>
+<h3>上传照片</h3>
+		            <br>
 		<form class="login-form" action="__SELF__" method="post">
 		
 				<div class="control-group">
-		            <label class="control-label" >相册</label>
+		            <h4 class="control-label">选择相册</h4>
+
 		            <div class="controls">
 		            <empty name="al">
 		                <tagLib name="html" />
@@ -68,6 +70,7 @@
 		          </div>
 				<p>注意：单张图片文件大小不超过1M</p>
         </form>
+        <a class="btn btn-info" href="javascript:history.go(-1);">返回</a>
 </div>
 </block>
 

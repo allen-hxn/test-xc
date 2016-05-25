@@ -11,7 +11,24 @@
 <block name="body">
 
 <section>
-	<div class="span12">
+<div class="span3">
+        <ul class="nav nav-list bs-docs-sidenav">
+            <li>
+			    <a href="{:U('user/account')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-cog fa-fw"></i>个人设置</a>
+		    </li>
+		     <li>
+			    <a href="{:U('Album/index')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-eye fa-fw"></i>关注好友</a>
+		    </li>
+		     <li>
+			    <a href="{:U('user/profile')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-pencil fa-fw"></i>修改密码</a>
+		    </li>
+		</ul>
+	</div>
+	<div class="span9">
+	<h3>修改密码</h3>
         <form class="login-form" action="__SELF__" method="post">
           <div class="control-group">
             <label class="control-label" for="inputPassword">原密码</label>

@@ -166,5 +166,59 @@ class UserController extends HomeController {
             $this->display();
         }
     }
+	
+    
+    public function account(){
+    	if(IS_POST){
+    		$data['uid'] = session('user_auth.uid');
+    		$data['username'] = I('username');
+    		$data['englishname'] = I('englishname');
+    		$data['birthday'] = strtotime(I('birthday'));
+    		$data['sex'] = I('sex');
+    		$data['xingzuo'] = I('xingzuo');
+    		$data['shengxiao'] = I('shengxiao');
+    		$data['homeland'] = I('homeland');
+    		$data['addtime'] = time();
+    		$data['addip'] = get_client_ip();
+    		
+    		$res = M('User_infomation')->add($data);
+    		if($res){
+    			$this->success('添加成功');
+    		}else{
+    			$this->error('添加失败');
+    		}
+    	}else{
+    		$where['uid'] = session('user_auth.uid');
+    		$user = M('user_infomation')->where($where)->find();
+    		$this->assign('user',$user);
+    		$this->display();
+    	}
 
+    }
+    
+    public function updateinfo(){
+    	if(IS_POST){
+    		$data['uid'] = session('user_auth.uid');
+    		$data['username'] = I('username');
+    		$data['englishname'] = I('englishname');
+    		$data['birthday'] = strtotime(I('birthday'));
+    		$data['sex'] = I('sex');
+    		$data['xingzuo'] = I('xingzuo');
+    		$data['shengxiao'] = I('shengxiao');
+    		$data['homeland'] = I('homeland');
+    	
+    		$res = M('User_infomation')->save($data);
+    		if($res){
+    			$this->success('修改成功');
+    		}else{
+    			$this->error('修改失败');
+    		}
+    	}else{
+			$this->error('操作错误');
+    	}
+    }
+    
+    public function modifyimg(){
+    	$this->display();
+    }
 }

@@ -1,0 +1,134 @@
+<extend name="Base/common" />
+<block name="header">
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h2>用户个人中心</h2>
+    
+  </div>
+</header>
+</block>
+<block name="script">
+<script src="__STATIC__/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script>
+$(function(){
+	 $(".form_datetime").datepicker({'dateFormat':'yy-mm-dd',changeMonth: true, changeYear: true});
+})
+</script>
+</block>
+
+<block name="style">
+<link rel="stylesheet" href="__STATIC__/jquery-ui-1.11.4.custom/jquery-ui.css" type="text/css" media="screen" charset="utf-8" />
+<style>
+
+</style>
+</block>
+<block name="body">
+<section>
+	<div class="span3">
+        <ul class="nav nav-list bs-docs-sidenav">
+            <li>
+			    <a href="{:U('user/account')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-cog fa-fw"></i>个人设置</a>
+		    </li>
+		     <li>
+			    <a href="{:U('Album/index')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-eye fa-fw"></i>关注好友</a>
+		    </li>
+		     <li>
+			    <a href="{:U('user/profile')}">
+				<i class="icon-chevron-right"></i><i class="fa fa-pencil fa-fw"></i>修改密码</a>
+		    </li>
+		</ul>
+	</div>
+	<div class="span9" style="margin-top:10px;">
+	  <h3>个人资料</h3>
+	  <form class="login-form" <if condition="$user == ''">action="__SELF__"<else/>action="{:U('User/updateinfo')}"</if> method="post">	   
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">用户名</label>
+            <div class="input-prepend">
+			  <span class="add-on"><i class="fa fa-user fa-fw"></i></span>
+			  <input class="" name="username" type="text" placeholder="请输入您的用户名" value='{$user.username}'>
+			</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">英文名</label>
+            <div class="input-prepend">
+			  <span class="add-on">E</span>
+			  <input class="" name="englishname" type="text" placeholder="Username" value="{$user.englishname}">
+			</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">生日</label>
+            <div class="input-prepend">
+			  <span class="add-on"><i class="fa fa-birthday-cake"></i></span>
+			  <input size="16" type="text" name="birthday" readonly class="form_datetime" value="{$user.birthday|date='Y-m-d',###}">
+			</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">星座</label>
+            <div class="input-prepend">
+			  <span class="add-on"><i class="fa fa-star"></i></span>
+			  <select name="xingzuo">
+				  <option value="水瓶座">水瓶座</option>
+				  <option value="双鱼座">双鱼座</option>
+				  <option value="白羊座">白羊座</option>
+				  <option value="金牛座">金牛座</option>
+				  <option value="双子座">双子座</option>
+				  <option value="巨蟹座">巨蟹座</option>
+				  <option value="狮子座">狮子座</option>
+				  <option value="处女座">处女座</option>
+				  <option value="天枰座">天枰座</option>
+				  <option value="天蝎座">天蝎座</option>
+				  <option value="射手座">射手座</option>
+				  <option value="魔蝎座">魔蝎座</option>
+				</select>
+			</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">生肖</label>
+            <div class="input-prepend">
+			  <span class="add-on">S</span>
+			   <select name="shengxiao">
+				  <option value="鼠">鼠</option>
+				  <option value="牛">牛</option>
+				  <option value="虎">虎</option>
+				  <option value="兔">兔</option>
+				  <option value="龙">龙</option>
+				  <option value="蛇">蛇</option>
+				  <option value="马">马</option>
+				  <option value="羊">羊</option>
+				  <option value="猴">猴</option>
+				  <option value="鸡">鸡</option>
+				  <option value="狗">狗</option>
+				  <option value="猪">猪</option>
+				</select>
+			</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">故乡</label>
+            <div class="input-prepend">
+			  <span class="add-on"><i class="fa fa-home"></i></span>
+			  <input class="" name="homeland" type="text" placeholder="" value="{$user.homeland}">
+			</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">性别</label>
+            <label class="radio inline">
+			  <input type="radio" name='sex' value="1" checked="checked"> 男
+			</label>
+			<label class="radio inline">
+			  <input type="radio" name='sex' value="2"> 女
+			</label>
+          </div>
+          
+          <div class="control-group">
+            <div class="controls">
+             
+              <button type="submit" class="btn btn-primary"><if condition="$user == ''">提交<else/>保存修改</if> </button>
+            </div>
+          </div>
+        </form>
+         <a class="btn" href="{:U('user/modifyimg')}">修改头像</a>
+	</div>
+</section>
+</block>

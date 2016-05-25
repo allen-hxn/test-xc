@@ -1,0 +1,133 @@
+<style>
+.hide-content{
+ position: absolute; 
+            top: 10%; 
+            left: 10%; 
+            width: 70%;  
+            padding: 16px;          
+            z-index:1032;
+            margin:0 0 70px 0 ;
+            text-align:center;
+}
+
+.wall-pic-list{
+            position: absolute; 
+            top: 7%; 
+            right:10%; 
+            z-index:1033;
+            margin:0 auto;
+            text-align:center;          
+}
+.wall-pic-list ul{list-style:none;margin:0px;position:relative;}
+.wall-pic-list li{margin:10px 0 0;padding:3px;cursor:pointer;overflow:hidden;}
+.wall-pic-list li img{width:80px;height:80px;}
+.wall-pic-list li:hover{background-color:#AAA;}
+.wall-pic-list li.selected{background-color:#AAA;}
+
+.view-prev{text-align:center;}
+.view-next{text-align:center;}
+
+.view-ul{max-height:970px;overflow:hidden;}
+</style>
+<script src="__STATIC__/bootstrap-dropdown-hover-master/dist/jquery.bootstrap-dropdown-hover.min.js"></script>
+<script src="__STATIC__/jQuery-qqFace/js/jquery.qqFace.js"></script>
+<script src="__STATIC__/style.js"></script>
+<script>
+         $(function(){
+        		$('.hide-close').click(function(){	
+        			$('.hide-div-all').hide();
+        		});
+        		
+        		$('.wall-pic-list li.view-img').click(function(){
+        			var id_ = $(this).attr('data-id');
+        			var month = $('input[name=month]').val();
+        			var year = $('input[name=year]').val();
+
+        			$.get('{:U("Album/pop")}',{'pid':id_,'month':month,'year':year},function(data){			
+        				$('.hide-wall').empty().append(data);
+        				$('.hide-div-all').show();
+        			});
+        		});
+        		
+        		$('.emotion').qqFace({ 
+        	        assign:'comment-text', //给输入框赋值 
+        	        path:'__STATIC__/jQuery-qqFace/arclist/'    //表情图片存放的路径 
+        	    }); 
+        		
+        		//下一个
+        		$('.view-next').click(function(){
+        			//创建一个隐藏层，将li放入
+        			if($('.hide-view').length<=0){
+        				$('.wall-pic-list').append('<div class="hide-view" style="display:none;"></div>');
+        			}
+        			var chi = $('.view-ul li').eq(0).clone();
+        			if($('.view-ul li').length>10){
+            			$('.view-ul li').eq(0).remove();
+            			$('.hide-view').append(chi);
+        			}
+
+        		});
+        		
+        		//上一个
+        		$('.view-prev').click(function(){
+        			if($('.hide-view li').length>0){
+        				var chi = $('.hide-view li:last').clone();
+        				$('.hide-view li:last').remove();
+        				$('.view-ul').prepend(chi);
+        			}
+        		});
+        		
+        		//始终将selected保持在1-4位
+        		if($('.view-ul').find('.selected').index()+1 >=5){
+        			var loca = $('.view-ul').find('.selected').index()+1;
+        			if($('.hide-view').length<=0){
+        				$('.wall-pic-list').append('<div class="hide-view" style="display:none;"></div>');
+        			}
+        			var i = 0;
+        			for(;i<=loca-4;i++){
+        				var chi = $('.view-ul li').eq(0).clone();
+        				if($('.view-ul li').length>10){
+                			$('.view-ul li').eq(0).remove();
+                			$('.hide-view').append(chi);
+            			}
+        			}
+        		}
+        		
+         });
+         </script>
+         <div class="hide-content">
+         <input type="hidden" name="month" value="{$month}" />
+         <input type="hidden" name="year" value="{$year}" />
+            <div style="width:100%;text-align:center;">
+                <img  class="img-rounded main-img"  src="/Uploads{$res.pic.path}"  />
+            </div>
+			<div style="margin:20px 0 0;">{$res.pic.filename}</div>
+			<div style="margin:20px auto 10px;width:800px;text-align:center;border-bottom:1px solid #525252;padding:0 0 10px;">
+			   <div style="float:left;">发表您的评论：</div><div style="float:right;">发布于：{$res.pic.addtime|date='Y-m-d H:i:s',###}</div>
+			   <div style="clear:both;"></div>
+			</div>
+			
+			  <div class='comment-content' style="width:800px;margin:0 auto;">
+			   <form action="{:U('album/addPicComment')}" method="post">
+	             <div style="float:left;width:7%;"><img  class="img-rounded"  src="/Uploads/album/20160509/57302d4d014c4.jpg" width="45" height="45" /></div>
+	             <div style="float:right; width:93%;">
+	             <input type="hidden" name="pid" value="{$res.pic.pid}" />
+	                  <div><textarea type="text" style="width:99%;" class="comment-text" name="con" id="comment-text"  placeholder="写点什么吧..." rows="5"></textarea></div>                 
+	                  <div style='float:left;'><span class="emotion"><i class="fa fa-smile-o fa-lg"></i></span>&nbsp;</div>
+	                  <div style="float:right;"><font class='comm'>0</font>/140 &nbsp;<input type='submit' class="btn btn-primary submit-comment" value="发表" ></div>
+	                  <div style="clear:both;"></div>
+	             </div>	             
+	             <div style="clear:both;"></div>
+	             </form>
+	          </div>
+			  <div><a href="{:U('album/picDetail',array('pid'=>$res['pic']['pid'],'aid'=>$res['pic']['aid']))}">更多评论</a></div>
+         </div>
+          <div class="wall-pic-list">
+              <a class="view-prev" href="javascript:;"><i class="fa fa-chevron-up fa-2x"></i></a>
+                <ul class='view-ul'>                 
+                 <volist name="res['piclist']" id="item">
+                  <li data-id="{$item.pid}"  <if condition="$item['pid'] eq $res['pic']['pid']">class="view-img selected"<else/>class="view-img"</if> ><img  src="/Uploads{$item.path}" width="80" height="80"/></li>
+                </volist>                 
+              </ul> 
+              <a class="view-next" href="javascript:;"><i class="fa fa-chevron-down fa-2x"></i></a>          
+          </div>          
