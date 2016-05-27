@@ -1,0 +1,18 @@
+/*//自定义下拉菜单*/
+.my-dropdown-menu{
+	margin:0px;
+	position: absolute;
+    z-index: 1003;   
+    background-color: #AEAEAE;
+    padding: 7px 8px 5px;
+}
+.my-dropdown-menu ul{list-style: none;margin: 0px;}
+.my-dropdown-menu li{padding:3px 10px 2px;margin:1px;  display: block;}
+.my-dropdown-menu li:hover{background-color: #484646;}
+.my-dropdown-menu-arrow{position: absolute;
+    transform: scale(2,2);
+    top: -9px;
+    color: #aeaeae;
+    left: 15px;}
+/*//自定义下拉菜单*/
+

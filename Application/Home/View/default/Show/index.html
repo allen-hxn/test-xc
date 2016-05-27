@@ -27,32 +27,231 @@
   .box img {
   max-width: 100%
 }
+.left-side-bar{
+ margin:30px 0 ;
+ padding:10px;border:1px solid #aeaeae;
+ border-radius:4px;
+}
+.left-side-bar ul{list-style: none;margin: 0px 0 0 8px;}
+.left-side-bar ul li{padding: 6px 2px;}
+.left-side-bar ul li a{text-decoration:none;width: 100%;display: block;}
+.left-side-bar ul li:hover{color:black;background-color: rgba(174, 174, 174, 0.28);}
 
+.gc-item{background-color:#1F1F1F;;border-radius:3px;color:white;padding:0 20px; margin-bottom:20px;}
+.gc-item-title{margin:20px 0 10px;max-height: 90px;position: relative;border-bottom:1px solid #484646;padding-bottom:10px;}
+.gc-item-name{display: inline-block;margin: 0 0 0 10px;position:absolute;}
+.gc-item-name p{line-height: 34px;}
+.gc-item-name-view{font-size: 10px;color: #AEAEAE;text-decoration:none;}
+.gc-item-name-view:hover{color: white;}
+
+.gc-item-comment{position: relative;}
+.gc-item-comment input{width:97%;border: 0px;border-radius: 0px;color:white;}
+.gc-item-comment-sp1{
+    position: absolute;
+    right: 30px;
+    border-left:1px solid #000 ;
+    padding: 3px 0;
+    }
+.gc-item-comment-sp1 a{padding: 0px 28px;color:#AEAEAE}
+.shuoshuo{}
+.zan{margin:10px 0 8px;padding:10px;}
+.zan i{border-left:1px solid #AEAEAE; text-align: center;}
+.zan i:first-child{border: 0px;}
+.zan a{color: white;padding: 6px 16px;}
+.zan a:hover{background-color:  #403F3F;}
+
+.pic{margin: 15px 0;}
+.gc-pic-a img{max-height: 300px;width: auto;}
+.comments input{background-color: #403F3F;height: 25px;}
+.comments:hover{border: 0px;}
+
+.gc-my-fa{position: relative;}
+.gc-my-fa input{height: 50px;width:97%;border: 0px;border-radius: 0px;color:white;background-color: #403F3F;}
+.gc-my-fa .gc-item-comment-sp1{position: absolute;
+    right: 30px;
+    border-left:1px solid #000 ;
+    padding: 15px 0;}
+ 
 
 </style>
 </block>
-<block name="body">
-    <div class="span12">
-        <!-- Contents
-        ================================================== -->
-        <section id="contents">
-           <div id="masonry" class="container-fluid">
-			  <div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
-				<div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
-				<div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
-				<div class="box"><a href="/Uploads/album/20160509/57302d4d014c4.jpg" data-lightbox="roadtrip"><img src="/Uploads/album/20160509/57302d4d014c4.jpg"></a></div>
-			</div>
 
+<block name="body">
+	<div class="span3">
+	   <div class="left-side-bar">
+	   <form class="form-search">
+		  <div class="input-append">			  
+			  <input class="span2" style="width:100%;" id="" name="" type="text" placeholder="查找(用户、相册)">
+			  <span class="add-on"><i class="fa fa-search"></i></span>
+		  </div>
+		</form>
+	   </div>
+	   
+	   <div class="left-side-bar">
+	   	<ul class="">
+            <li>
+			    <a href="#">
+				<i></i>全部</a>
+		    </li>
+		    <li>
+			    <a href="#">
+				<i></i>同学</a>
+		    </li>
+		    <li>
+			    <a href="#">
+				<i></i>好友</a>
+		    </li>
+		</ul>
+	   	
+	   </div>
+	</div>
+    <div class="span9">
+    	
+    	 <section class="gc-item">       
+         <div class="row-fluid" style="min-height: 30px;text-align: center;padding: 10px 0 8px;">
+              <form>
+		        <div class="gc-my-fa">			  
+					  <input class="" id="" name="" type="text" placeholder="我也说一句">
+					  <span class="gc-item-comment-sp1"><a href="javascript:;"><i class="fa fa-hand-o-left fa-2x"></i></a></span>
+				</div>
+			</form>
+		</div>		
         </section>
+        <!-- Contents  ================================================== -->
+
+        <section class="gc-item">       
+        <div class="row-fluid">
+          <div class="gc-item-title">
+          	<a href="javascript:;" class="example" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="" data-original-title="Popover on top" ><img src="/Uploads/album/20160509/57302d4d014c4.jpg" width=60 height=60></a>
+			<div class="gc-item-name">
+				<p style="font-size:14px;">周杰伦</p>
+				<p style="font-size: 10px; color:#AEAEAE;">5月12号 12:23&nbsp;&nbsp;<i class="fa fa-eye"></i><a href="javascript:;" class="gc-item-name-view">浏览(10)</a></p>
+			</div>
+          </div>
+          <div class="shuoshuo">
+          	<p>有个年轻人崇拜杨绛，高中毕业的时候给杨绛写了一封长信，表达自己的仰慕之情兼倾诉人生困惑，杨绛给他回信了。淡黄色的竖排红格信纸，毛笔字。除了寒暄和一些鼓励晚辈的句子之外，杨绛的信里其实只写了一句话，诚恳而不客气：“你的问题主要在于读书不多而想得太多。”</p>
+          </div>
+          
+            <div class='pic' style="margin-left:0px;">
+          	  <a href="#" class="gc-pic-a">
+                <img  alt="360x270" src="/Uploads/album/20160509/57302d4d014c4.jpg" style="">
+              </a>
+			
+            </div>
+            
+            <div class="zan">
+            	<a href="javascript:;"><i class="fa fa fa-thumbs-o-up fa-1x">赞</i></a>
+            	<a href="javascript:;"><i class="fa fa-comment">评论</i></a>
+            	<a href="javascript:;"><i class="fa fa-star ">收藏</i></a>
+            	<a class="my-drop-menu" href="javascript:;"><i class="fa fa-ellipsis-h"></i>
+            		
+            	</a>
+            </div>
+           <div class="comments">
+           	<form>
+		        <div class="gc-item-comment">			  
+					  <input class="" id="" name="" type="text" placeholder="我也说一句">
+					  <span class="gc-item-comment-sp1"><a href="javascript:;"><i class="fa fa-hand-o-left fa-2x"></i></a></span>
+				</div>
+			</form>
+           </div>
+		</div>		
+        </section>
+        
+        <section class="gc-item">       
+        <div class="row-fluid">
+          <div class="gc-item-title">
+          	<a href="javascript:;" class="my-drop"><img src="/Uploads/album/20160509/57302d4d014c4.jpg" width=60 height=60></a>
+			<div class="gc-item-name">
+				<p style="font-size:14px;">周杰伦</p>
+				<p style="font-size: 10px; color:#AEAEAE;">5月12号 12:23&nbsp;&nbsp;<i class="fa fa-eye"></i><a href="javascript:;" class="gc-item-name-view">浏览(10)</a></p>
+			</div>
+          </div>
+          <div class="shuoshuo">
+          	<p>有个年轻人崇拜杨绛，高中毕业的时候给杨绛写了一封长信，表达自己的仰慕之情兼倾诉人生困惑，杨绛给他回信了。淡黄色的竖排红格信纸，毛笔字。除了寒暄和一些鼓励晚辈的句子之外，杨绛的信里其实只写了一句话，诚恳而不客气：“你的问题主要在于读书不多而想得太多。”</p>
+          </div>
+          
+          <div class='pic' style="margin-left:0px;">
+          	  <a href="#" class="gc-pic-a">
+                <img  alt="360x270" src="/Uploads/album/20160509/57302d4d014c4.jpg" style="">
+              </a>
+			
+            </div>
+            
+            <div class="zan">
+            	<a href="javascript:;"><i class="fa fa fa-thumbs-o-up fa-1x">赞</i></a>
+            	<a href="javascript:;"><i class="fa fa-comment">评论</i></a>
+            	<a href="javascript:;"><i class="fa fa-star ">收藏</i></a>
+            	<a class="my-drop-menu" href="javascript:;"><i class="fa fa-ellipsis-h"></i>
+            		
+            	</a>
+            </div>
+           <div class="comments">
+           	<form>
+		        <div class="gc-item-comment">			  
+					  <input class="" id="" name="" type="text" placeholder="我也说一句">
+					  <span class="gc-item-comment-sp1"><a href="javascript:;"><i class="fa fa-hand-o-left fa-2x"></i></a></span>
+				</div>
+			</form>
+           </div>
+		</div>		
+        </section>
+        
+         <section class="gc-item">       
+        <div class="row-fluid" style="height: 30px;text-align: center;padding: 10px 0 8px;">
+                                  <a href="javascript:;">加载更多</a>
+		</div>		
+        </section>
+        
     </div>
 
 </block>
 <block name='script'>
 <script src="__STATIC__/mm/js/masonry-docs.min.js"></script>
 <script src="__STATIC__/lightbox/js/lightbox.js"></script>
+<script src="__STATIC__/bootstrap-dropdown-hover-master/dist/jquery.bootstrap-dropdown-hover.min.js"></script>
 
 <script>
 $(function(){
+	
+	$('.my-drop-menu').hover(function(){
+		var m_width = $(this).offset().left;
+		var m_height = $(this).offset().top;
+		var w_self = $(this).outerWidth();
+		var h_self = $(this).outerHeight()+5;
+		
+		var hh = m_height+h_self;
+		var left_ = w_self/2;
+		var html = '<div class="my-dropdown-menu" style="top:'+ hh +'px;left:'+m_width+'px;" >'+
+	            		'<ul><li>隐藏</li>	<li>举报</li></ul>'+
+	            		'<div class="my-dropdown-menu-arrow" style="left:'+left_ +';">◆</div>'+
+            		'</div>';
+		$(this).append(html);
+	},function(){
+		$(this).find('.my-dropdown-menu').remove();
+	});
+	
+	$('.my-drop').hover(function(){
+		var m_width = $(this).offset().left;
+		var m_height = $(this).offset().top;
+		var w_self = $(this).outerWidth();
+		var h_self = $(this).outerHeight()+5;
+		
+		var hh = m_height+h_self;
+		var left_ = w_self/2;
+		var html = '<div class="my-dropdown-menu" style="top:'+ hh +'px;left:'+m_width+'px;" >'+
+	            		'<ul><li>隐藏</li>	<li>举报</li></ul>'+
+	            		'<div class="my-dropdown-menu-arrow" style="left:'+left_ +';">◆</div>'+
+            		'</div>';
+		$(this).append(html);
+	},function(){
+		$(this).find('.my-dropdown-menu').remove();
+	});
+	
+	$('.example').popover({
+		'html':true,
+		'trigger':'hover',
+	});
 	
 	 lightbox.option({
 	      'resizeDuration': 200,

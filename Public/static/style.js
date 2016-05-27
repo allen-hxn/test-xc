@@ -1,4 +1,4 @@
-$(function(){
+;$(function(){
 	
 	$('a.zan').click(function(){
 		if($(this).hasClass('dianzan')){
