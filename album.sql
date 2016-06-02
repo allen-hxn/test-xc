@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2016-05-27 18:13:57
+Date: 2016-06-02 14:45:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,7 +65,7 @@ CREATE TABLE `ab_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of ab_action_log
@@ -130,6 +130,7 @@ INSERT INTO `ab_action_log` VALUES ('57', '1', '1', '2130706433', 'member', '1',
 INSERT INTO `ab_action_log` VALUES ('58', '1', '1', '2130706433', 'member', '1', 'admin在2016-05-25 08:40登录了后台', '1', '1464136856');
 INSERT INTO `ab_action_log` VALUES ('59', '1', '1', '2130706433', 'member', '1', 'admin在2016-05-26 09:09登录了后台', '1', '1464224946');
 INSERT INTO `ab_action_log` VALUES ('60', '1', '1', '2130706433', 'member', '1', 'admin在2016-05-27 14:34登录了后台', '1', '1464330884');
+INSERT INTO `ab_action_log` VALUES ('61', '1', '1', '2130706433', 'member', '1', 'admin在2016-05-30 15:02登录了后台', '1', '1464591752');
 
 -- ----------------------------
 -- Table structure for `ab_addons`
@@ -985,7 +986,7 @@ CREATE TABLE `ab_member` (
 -- ----------------------------
 -- Records of ab_member
 -- ----------------------------
-INSERT INTO `ab_member` VALUES ('1', 'admin', '0', '0000-00-00', '', '80', '32', '0', '1462327196', '2130706433', '1464330884', '1');
+INSERT INTO `ab_member` VALUES ('1', 'admin', '0', '0000-00-00', '', '90', '33', '0', '1462327196', '2130706433', '1464591752', '1');
 
 -- ----------------------------
 -- Table structure for `ab_menu`
@@ -1240,7 +1241,7 @@ CREATE TABLE `ab_ucenter_member` (
 -- ----------------------------
 -- Records of ab_ucenter_member
 -- ----------------------------
-INSERT INTO `ab_ucenter_member` VALUES ('1', 'admin', '4743e3ec6b8a21cc51bd8d45d835f3c5', '867690898@qq.com', '', '1462327196', '0', '1464330884', '2130706433', '1462327196', '1');
+INSERT INTO `ab_ucenter_member` VALUES ('1', 'admin', '4743e3ec6b8a21cc51bd8d45d835f3c5', '867690898@qq.com', '', '1462327196', '0', '1464591752', '2130706433', '1462327196', '1');
 INSERT INTO `ab_ucenter_member` VALUES ('2', 'haha', '91b0b811c6aa1e0cf0d764e50d7b65b9', '8676908@qq.com', '', '1464085465', '2130706433', '0', '0', '1464085465', '1');
 
 -- ----------------------------
